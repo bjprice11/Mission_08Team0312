@@ -1,97 +1,99 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-//using Mission_08.Models;
+using Mission_08.Models;
 
 namespace Mission_08.Controllers;
 
 public class HomeController : Controller
 {
-    private ITasksItemsRepository _context;
+    private ITasksRepository _repo;
 
-    public HomeController(ITasksItemsRepository temp)
+    public HomeController(ITasksRepository temp)
     {
-        _context = temp;
+        _repo = temp;
     }
+
     [HttpGet]
     public IActionResult Index()
     {
-        ViewBag.TaskItems = _context
-            .OrderBy(t => t.CategoryName)
-            .toList();
+        ViewBag.Categories = _repo.Category
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+            
         return View();
     }
+
     [HttpPost]
-        public IActionResult Index(Task task)
+    public IActionResult Index(TaskItem task)
+    {
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
-            {
-                _context.TaskItems.Add(task);
-                _context.SaveChanges();
-                return View("Quadrants", task);
-            }
-            else
-            {
-                ViewBag.Categories = _context.Categories
-                    .OrderBy(t => t.CategoryName)
-                    .ToList();
-                return View();
-            }
+            _repo.AddTask(task);
+            return RedirectToAction("Quadrants");
         }
+        else
+        {
+            ViewBag.Categories = _repo.Category
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+            return View(task);
+        }
+    }
+
     public IActionResult Quadrants()
     {
-        var tasks = _context.TaskItems
-            .Include(x => x.Categories)
-            .ToList();
+        // The repository should handle the .Include(x => x.Category) internally 
+        // in its "Tasks" property implementation.
+        var tasks = _repo.TaskItems.ToList();
+        
         return View(tasks);
     }
     
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var TaskToEdit = _context.TaskItems
-            .Single(x=>x.TaskId==id);
-        ViewBag.TaskItems = _context
-            .OrderBy(t => t.CategoryName)
-            .toList();
-        return View("Index", TaskToEdit);
+        var taskToEdit = _repo.TaskItems
+            .Single(x => x.TaskId == id);
+
+        ViewBag.Categories = _repo.Category
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+
+        return View("Index", taskToEdit);
     }
 
     [HttpPost]
-    public IActionResult Edit(Task UpdatedTask)
+    public IActionResult Edit(TaskItem updatedTask)
     {
         if (ModelState.IsValid)
         {
-            _context.TaskItems.Update(UpdatedTask);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            _repo.UpdateTask(updatedTask);
+            return RedirectToAction("Quadrants");
         }
         else
         {
-            ViewBag.TaskItems = _context
-                .OrderBy(t => t.CategoryName)
-                .toList();
-            return View("Index", UpdatedTask);
+            ViewBag.Categories = _repo.Category
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+            return View("Index", updatedTask);
         }
     }
 
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var TaskToDelete = _context.TaskItems
-            .Single(x=>x.TaskId==id);
-        return View("Quadrants");
+        var taskToDelete = _repo.TaskItems
+            .Single(x => x.TaskId == id);
+
+        return View(taskToDelete);
     }
 
     [HttpPost]
-    public IActionResult Delete(Task TaskToDelete)
+    public IActionResult Delete(TaskItem taskToDelete)
     {
-        _context.TaskItems.Remove(TaskToDelete);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
+        _repo.DeleteTask(taskToDelete);
+        
+        return RedirectToAction("Quadrants");
     }
-
-    
-    
 }
