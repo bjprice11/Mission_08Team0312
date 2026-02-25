@@ -18,7 +18,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.TaskItems = _context
-            .OrderBy(t => t.Quadrant)
+            .OrderBy(t => t.CategoryName)
             .toList();
         return View();
     }
@@ -33,15 +33,18 @@ public class HomeController : Controller
             }
             else
             {
-                ViewBag.Categories = _context.TaskItems
-                    .OrderBy(t => t.Quadrant)
+                ViewBag.Categories = _context.Categories
+                    .OrderBy(t => t.CategoryName)
                     .ToList();
                 return View();
             }
         }
     public IActionResult Quadrants()
     {
-        return View();
+        var tasks = _context.TaskItems
+            .Include(x => x.Categories)
+            .ToList();
+        return View(tasks);
     }
     
     [HttpGet]
@@ -50,7 +53,7 @@ public class HomeController : Controller
         var TaskToEdit = _context.TaskItems
             .Single(x=>x.TaskId==id);
         ViewBag.TaskItems = _context
-            .OrderBy(t => t.Quadrant)
+            .OrderBy(t => t.CategoryName)
             .toList();
         return View("Index", TaskToEdit);
     }
@@ -67,7 +70,7 @@ public class HomeController : Controller
         else
         {
             ViewBag.TaskItems = _context
-                .OrderBy(t => t.Quadrant)
+                .OrderBy(t => t.CategoryName)
                 .toList();
             return View("Index", UpdatedTask);
         }
