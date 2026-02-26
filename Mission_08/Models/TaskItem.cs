@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission_08.Models;
 
@@ -17,7 +18,9 @@ public partial class TaskItem
     [Required(ErrorMessage = "Please enter a task quadrant")]
     public int Quadrant { get; set; }
 
+    [ForeignKey("CategoryId")]
     public int? CategoryId { get; set; }
+    public Category Category { get; set; }
 
-    public int? Completed { get; set; }
+    public bool? Completed { get; set; } = false;
 }

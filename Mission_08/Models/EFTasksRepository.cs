@@ -12,4 +12,22 @@ public class EFTasksRepository : ITasksRepository
     }
 
     public List<TaskItem> TaskItems =>_context.TaskItems.ToList();
+    public List<Category> Categories => _context.Categories.ToList();
+    public void AddTask(TaskItem taskItem)
+    {
+        _context.Add(taskItem);
+        _context.SaveChanges();
+    }
+
+    public void UpdateTask(TaskItem taskItem)
+    {
+        _context.Update(taskItem);
+        _context.SaveChanges();
+    }
+
+    public void DeleteTask(TaskItem taskItem)
+    {
+        _context.Remove(taskItem);
+        _context.SaveChanges();
+    }
 }
