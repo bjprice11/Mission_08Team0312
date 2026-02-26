@@ -22,7 +22,7 @@ public class HomeController : Controller
             .OrderBy(x => x.Name)
             .ToList();
             
-        return View();
+        return View(new TaskItem());
     }
 
     [HttpPost]
