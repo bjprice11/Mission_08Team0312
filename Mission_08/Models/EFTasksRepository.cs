@@ -1,4 +1,5 @@
 using SQLitePCL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mission_08.Models;
 
@@ -11,7 +12,7 @@ public class EFTasksRepository : ITasksRepository
         _context = temp;
     }
 
-    public List<TaskItem> TaskItems =>_context.TaskItems.ToList();
+    public List<TaskItem> TaskItems =>_context.TaskItems.Include(t => t.Category).ToList();
     public List<Category> Categories => _context.Categories.ToList();
     public void AddTask(TaskItem taskItem)
     {

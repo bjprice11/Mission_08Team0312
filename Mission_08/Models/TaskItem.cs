@@ -22,5 +22,5 @@ public partial class TaskItem
     public int? CategoryId { get; set; }
     public Category Category { get; set; }
 
-    public bool? Completed { get; set; } = false;
+    public bool Completed { get; set; } = false;
 }
