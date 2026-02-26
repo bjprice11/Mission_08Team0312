@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mission_08.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mission_08.Controllers;
 
@@ -18,9 +19,8 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        ViewBag.Categories = _repo.Categories
-            .OrderBy(x => x.Name)
-            .ToList();
+        ViewBag.Categories = new SelectList(_repo.Categories
+            .OrderBy(x => x.Name));
             
         return View(new TaskItem());
     }
@@ -35,9 +35,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories = _repo.Categories
-                .OrderBy(x => x.Name)
-                .ToList();
+            ViewBag.Categories = new SelectList(_repo.Categories
+                .OrderBy(x => x.Name));
             return View(task);
         }
     }
@@ -55,9 +54,8 @@ public class HomeController : Controller
         var taskToEdit = _repo.TaskItems
             .Single(x => x.TaskId == id);
 
-        ViewBag.Categories = _repo.Categories
-            .OrderBy(x => x.Name)
-            .ToList();
+        ViewBag.Categories = new SelectList(_repo.Categories
+            .OrderBy(x => x.Name));
 
         return View("Index", taskToEdit);
     }
@@ -72,9 +70,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories = _repo.Categories
-                .OrderBy(x => x.Name)
-                .ToList();
+            ViewBag.Categories =new SelectList(_repo.Categories
+                .OrderBy(x => x.Name));
             return View("Index", updatedTask);
         }
     }
