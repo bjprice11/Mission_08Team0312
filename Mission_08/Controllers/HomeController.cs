@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mission_08.Models;
+using System.Linq;
 
 namespace Mission_08.Controllers;
 
@@ -17,8 +18,8 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        ViewBag.Categories = _repo.Category
-            .OrderBy(x => x.CategoryName)
+        ViewBag.Categories = _repo.Categories
+            .OrderBy(x => x.Name)
             .ToList();
             
         return View();
@@ -34,8 +35,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories = _repo.Category
-                .OrderBy(x => x.CategoryName)
+            ViewBag.Categories = _repo.Categories
+                .OrderBy(x => x.Name)
                 .ToList();
             return View(task);
         }
@@ -43,8 +44,6 @@ public class HomeController : Controller
 
     public IActionResult Quadrants()
     {
-        // The repository should handle the .Include(x => x.Category) internally 
-        // in its "Tasks" property implementation.
         var tasks = _repo.TaskItems.ToList();
         
         return View(tasks);
@@ -56,8 +55,8 @@ public class HomeController : Controller
         var taskToEdit = _repo.TaskItems
             .Single(x => x.TaskId == id);
 
-        ViewBag.Categories = _repo.Category
-            .OrderBy(x => x.CategoryName)
+        ViewBag.Categories = _repo.Categories
+            .OrderBy(x => x.Name)
             .ToList();
 
         return View("Index", taskToEdit);
@@ -73,8 +72,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories = _repo.Category
-                .OrderBy(x => x.CategoryName)
+            ViewBag.Categories = _repo.Categories
+                .OrderBy(x => x.Name)
                 .ToList();
             return View("Index", updatedTask);
         }
