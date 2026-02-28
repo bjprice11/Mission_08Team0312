@@ -70,10 +70,18 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories =new SelectList(_repo.Categories
+            ViewBag.Categories = new SelectList(_repo.Categories
                 .OrderBy(x => x.Name));
             return View("Index", updatedTask);
         }
+    }
+
+    public IActionResult MarkCompleted(int id)
+    {
+        var task = _repo.TaskItems.Single(x => x.TaskId == id);
+        task.Completed = true;
+        _repo.UpdateTask(task);
+        return RedirectToAction("QuadrantsView");
     }
 
     [HttpGet]
