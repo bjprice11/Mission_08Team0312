@@ -20,8 +20,8 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.Categories = new SelectList(_repo.Categories
-            .OrderBy(x => x.Name));
-            
+            .OrderBy(x => x.Name), "CategoryId", "Name");
+
         return View(new TaskItem());
     }
 
@@ -36,7 +36,7 @@ public class HomeController : Controller
         else
         {
             ViewBag.Categories = new SelectList(_repo.Categories
-                .OrderBy(x => x.Name));
+                .OrderBy(x => x.Name), "CategoryId", "Name");
             return View(task);
         }
     }
@@ -55,7 +55,7 @@ public class HomeController : Controller
             .Single(x => x.TaskId == id);
 
         ViewBag.Categories = new SelectList(_repo.Categories
-            .OrderBy(x => x.Name));
+            .OrderBy(x => x.Name), "CategoryId", "Name");
 
         return View("Index", taskToEdit);
     }
@@ -70,8 +70,8 @@ public class HomeController : Controller
         }
         else
         {
-            ViewBag.Categories =new SelectList(_repo.Categories
-                .OrderBy(x => x.Name));
+            ViewBag.Categories = new SelectList(_repo.Categories
+                .OrderBy(x => x.Name), "CategoryId", "Name");
             return View("Index", updatedTask);
         }
     }
