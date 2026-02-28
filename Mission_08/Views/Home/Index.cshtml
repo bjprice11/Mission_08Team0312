@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Index" method="post">
+        <form asp-action="@(Model.TaskId == 0 ? "Index" : "Edit")" method="post">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
             <input asp-for="TaskId" type="hidden" />
 
@@ -49,7 +49,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">@(Model.TaskId == 0 ? "Add Task" : "Save Changes")</button>
-                <a asp-action="Quadrants" asp-controller="Home" class="btn btn-outline-secondary">Cancel</a>
+                <a asp-action="QuadrantsView" asp-controller="Home" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>

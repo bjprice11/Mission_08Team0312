@@ -66,7 +66,7 @@ public class HomeController : Controller
         if (ModelState.IsValid)
         {
             _repo.UpdateTask(updatedTask);
-            return RedirectToAction("Quadrants");
+            return RedirectToAction("QuadrantsView");
         }
         else
         {
@@ -89,7 +89,7 @@ public class HomeController : Controller
     public IActionResult Delete(TaskItem taskToDelete)
     {
         _repo.DeleteTask(taskToDelete);
-        
-        return RedirectToAction("Quadrants");
+
+        return RedirectToAction("QuadrantsView");
     }
 }
