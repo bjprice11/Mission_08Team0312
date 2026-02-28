@@ -51,7 +51,7 @@
                             <tr>
                                 <td>@app.Task</td>
                                 <td>@app.DueDate</td>
-                                <td>@app.Category.Name</td>
+                                <td>@app.Category?.Name</td>
                                 <td>@app.Completed</td>
                                 <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@app.TaskId">Edit</a></td>
                                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@app.TaskId">Delete</a></td>
@@ -82,7 +82,7 @@
                             <tr>
                                 <td>@app.Task</td>
                                 <td>@app.DueDate</td>
-                                <td>@app.Category.Name</td>
+                                <td>@app.Category?.Name</td>
                                 <td>@app.Completed</td>
                                 <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@app.TaskId">Edit</a></td>
                                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@app.TaskId">Delete</a></td>
@@ -120,7 +120,7 @@
                             <tr>
                                 <td>@app.Task</td>
                                 <td>@app.DueDate</td>
-                                <td>@app.Category.Name</td>
+                                <td>@app.Category?.Name</td>
                                 <td>@app.Completed</td>
                                 <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@app.TaskId">Edit</a></td>
                                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@app.TaskId">Delete</a></td>
@@ -151,7 +151,7 @@
                             <tr>
                                 <td>@app.Task</td>
                                 <td>@app.DueDate</td>
-                                <td>@app.Category.Name</td>
+                                <td>@app.Category?.Name</td>
                                 <td>@app.Completed</td>
                                 <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@app.TaskId">Edit</a></td>
                                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@app.TaskId">Delete</a></td>

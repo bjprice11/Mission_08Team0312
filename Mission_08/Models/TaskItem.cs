@@ -18,9 +18,9 @@ public partial class TaskItem
     [Required(ErrorMessage = "Please enter a task quadrant")]
     public int Quadrant { get; set; }
 
-    [ForeignKey("CategoryId")]
     public int? CategoryId { get; set; }
-    public Category Category { get; set; }
+    [ForeignKey("CategoryId")]
+    public Category? Category { get; set; }
 
     public bool Completed { get; set; } = false;
 }
